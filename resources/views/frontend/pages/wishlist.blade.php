@@ -34,7 +34,7 @@
 								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
-						<tbody>
+						{{-- <tbody>
 							@if(Helper::getAllProductFromWishlist())
 								@foreach(Helper::getAllProductFromWishlist() as $key=>$wishlist)
 									<tr>
@@ -61,7 +61,7 @@
 							@endif
 
 
-						</tbody>
+						</tbody> --}}
 					</table>
 					<!--/ End Shopping Summery -->
 				</div>

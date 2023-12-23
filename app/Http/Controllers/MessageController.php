@@ -5,6 +5,8 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Mail;
+
 class MessageController extends Controller
 {
     /**
@@ -59,7 +61,18 @@ class MessageController extends Controller
         $data['phone']=$message->phone;
         $data['message']=$message->message;
         $data['subject']=$message->subject;
-        $data['photo']=Auth()->user()->photo;
+        $data['photo']='https://picsum.photos/200';
+
+        $mail_model = $message->toArray();
+
+        $mail = Mail::send('contact_mail', $mail_model, function ($message) use ($request) {
+            $message->from($request->email);
+            $message->to('info@thegamg.org', 'Admin')->subject('Contact Form Mail');
+        });
+
+        if ($mail) {
+            return redirect()->back()->with(['success' => 'Contact Form Submitted Successfully']);
+        }
         // return $data;    
         event(new MessageSent($data));
         exit();
